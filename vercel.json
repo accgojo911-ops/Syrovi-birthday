@@ -12,6 +12,10 @@
       "dest": "/happy-birthday.mp3"
     },
     {
+      "src": "/profile.png",
+      "dest": "/profile.png"
+    },
+    {
       "src": "/(.*)",
       "dest": "app.py"
     }
