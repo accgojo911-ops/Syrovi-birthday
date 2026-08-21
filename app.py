@@ -2,6 +2,7 @@ from flask import Flask, render_template_string
 
 app = Flask(__name__)
 
+# আপনার HTML, CSS এবং JavaScript কোড
 HTML_CODE = """
 <!DOCTYPE html>
 <html lang="en">
@@ -185,7 +186,7 @@ h1{
     to{ background-position:220%; }
 }
 
-/* গোল ছবির জন্য যোগ করা CSS */
+/* গোল প্রোফাইল ছবির CSS */
 .profile-img {
     width: 140px;
     height: 140px;
@@ -452,6 +453,12 @@ button.clicked{
     .script{ font-size:19px; }
     .profile-img{ width: 110px; height: 110px; }
 }
+@media(prefers-reduced-motion:reduce){
+    *, *::before, *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+    }
+}
 </style>
 </head>
 <body>
@@ -462,8 +469,9 @@ button.clicked{
 </div>
 <div class="light"></div>
 
-<audio id="birthdaySong" loop preload="auto">
-    <source src="/happy-birthday.mp3" type="audio/mpeg">
+<!-- ব্যাকগ্রাউন্ড মিউজিক -->
+<audio id="birthdaySong" preload="auto" loop>
+    <source src="https://raw.githubusercontent.com/accgojo911-ops/Syrovi-birthday/main/static/happy-birthday.mp3" type="audio/mpeg">
 </audio>
 
 <div class="container">
@@ -471,8 +479,8 @@ button.clicked{
 <div class="small">A Special Day For Someone Special</div>
 <h1>Happy Birthday</h1>
 
-<!-- গোল ইমেজ ট্যাগ (এখানে আপনার GitHub-এর ইমেজ ফাইলের নাম বা লিংক দিন) -->
-<img src="/profile.png" alt="Profile Picture" class="profile-img">
+<!-- গোল প্রোফাইল ইমেজ -->
+<img src="https://raw.githubusercontent.com/accgojo911-ops/Syrovi-birthday/main/static/profile.png" alt="Surovii" class="profile-img">
 
 <div class="name"><span>Surovii</span> 🎂</div>
 <div class="line"></div>
@@ -502,19 +510,25 @@ button.clicked{
 const music = document.getElementById("birthdaySong");
 music.volume = 0.55;
 
-function startAudio() {
-    if (music.paused) {
-        music.play().catch(e => console.log("Audio play blocked:", e));
+function startMusic(){
+    if(music.paused){
+        music.play().then(() => {
+            console.log("Music playing");
+        }).catch(function(e){
+            console.log("Autoplay blocked:", e);
+        });
     }
 }
 
-document.addEventListener("click", startAudio, { once: true });
-document.addEventListener("touchstart", startAudio, { once: true });
+// মোবাইল ও ডেস্কটপে প্রথম টাচ বা ক্লিকে গান বাজানোর জন্য
+document.addEventListener("pointerdown", startMusic, {once:true});
+document.addEventListener("touchstart", startMusic, {once:true, passive:true});
+document.addEventListener("click", startMusic, {once:true});
 
 function showMessage(){
-    startAudio();
     const box = document.getElementById("secret");
     const button = document.getElementById("messageButton");
+    startMusic();
     button.classList.remove("clicked");
     void button.offsetWidth;
     button.classList.add("clicked");
@@ -594,6 +608,13 @@ function createConfetti(amount, target){
         setTimeout(function(){ c.remove(); }, 1700);
     }
 }
+
+window.addEventListener("load", function(){
+    setTimeout(function(){
+        const heart = document.querySelector(".heart");
+        createConfetti(30, heart);
+    }, 700);
+});
 </script>
 </body>
 </html>
