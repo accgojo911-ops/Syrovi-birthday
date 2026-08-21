@@ -2,7 +2,6 @@ from flask import Flask, render_template_string
 
 app = Flask(__name__)
 
-# আপনার HTML, CSS এবং JavaScript কোড
 HTML_CODE = """
 <!DOCTYPE html>
 <html lang="en">
@@ -185,6 +184,21 @@ h1{
     from{ background-position:0%; }
     to{ background-position:220%; }
 }
+
+/* গোল ছবির জন্য যোগ করা CSS */
+.profile-img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 18px auto 10px;
+    border: 3px solid #ff70ac;
+    box-shadow: 0 0 20px rgba(255, 112, 172, 0.4);
+    display: block;
+    position: relative;
+    z-index: 2;
+}
+
 .name{
     position:relative;
     z-index:2;
@@ -436,12 +450,7 @@ button.clicked{
     .name{ font-size:29px; }
     .message{ font-size:13px; line-height:1.85; }
     .script{ font-size:19px; }
-}
-@media(prefers-reduced-motion:reduce){
-    *, *::before, *::after{
-        animation-duration:.01ms !important;
-        animation-iteration-count:1 !important;
-    }
+    .profile-img{ width: 110px; height: 110px; }
 }
 </style>
 </head>
@@ -452,13 +461,19 @@ button.clicked{
     <div class="blob blob3"></div>
 </div>
 <div class="light"></div>
-<audio id="birthdaySong" preload="auto" loop>
-    <source src="happy-birthday.mp3" type="audio/mpeg">
+
+<audio id="birthdaySong" loop preload="auto">
+    <source src="/happy-birthday.mp3" type="audio/mpeg">
 </audio>
+
 <div class="container">
 <div class="card">
 <div class="small">A Special Day For Someone Special</div>
 <h1>Happy Birthday</h1>
+
+<!-- গোল ইমেজ ট্যাগ (এখানে আপনার GitHub-এর ইমেজ ফাইলের নাম বা লিংক দিন) -->
+<img src="/profile.png" alt="Profile Picture" class="profile-img">
+
 <div class="name"><span>Surovii</span> 🎂</div>
 <div class="line"></div>
 <div class="heart">❤️</div>
@@ -482,26 +497,24 @@ button.clicked{
 <div class="footer">Made with ❤️ just for you</div>
 </div>
 </div>
+
 <script>
 const music = document.getElementById("birthdaySong");
 music.volume = 0.55;
 
-window.addEventListener("load", function(){
-    music.play().catch(function(){});
-});
-
-function startMusic(){
-    if(music.paused){
-        music.play().catch(function(){});
+function startAudio() {
+    if (music.paused) {
+        music.play().catch(e => console.log("Audio play blocked:", e));
     }
 }
-document.addEventListener("touchstart", startMusic, {once:true, passive:true});
-document.addEventListener("click", startMusic, {once:true});
+
+document.addEventListener("click", startAudio, { once: true });
+document.addEventListener("touchstart", startAudio, { once: true });
 
 function showMessage(){
+    startAudio();
     const box = document.getElementById("secret");
     const button = document.getElementById("messageButton");
-    startMusic();
     button.classList.remove("clicked");
     void button.offsetWidth;
     button.classList.add("clicked");
@@ -581,13 +594,6 @@ function createConfetti(amount, target){
         setTimeout(function(){ c.remove(); }, 1700);
     }
 }
-
-window.addEventListener("load", function(){
-    setTimeout(function(){
-        const heart = document.querySelector(".heart");
-        createConfetti(30, heart);
-    }, 700);
-});
 </script>
 </body>
 </html>
@@ -596,5 +602,3 @@ window.addEventListener("load", function(){
 @app.route('/')
 def home():
     return render_template_string(HTML_CODE)
-
-# Vercel-এর জন্য app অবজেক্টটি ব্যবহার করা হয়, app.run() ডাইরেক্ট কল করা যাবে না
