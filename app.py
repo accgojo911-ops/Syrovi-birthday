@@ -597,10 +597,4 @@ window.addEventListener("load", function(){
 def home():
     return render_template_string(HTML_CODE)
 
-if __name__ == '__main__':
-    # Host and Port Configuration
-    HOST = '0.0.0.0'  # '0.0.0.0' দিলে আপনার লোকাল নেটওয়ার্কের যে কেউ এই ওয়েবসাইট দেখতে পারবে
-    PORT = 7362       # Port নম্বর আপনার প্রয়োজন অনুযায়ী পরিবর্তন করতে পারেন
-
-    print(f"Server is running on http://localhost:{PORT}")
-    app.run(host=HOST, port=PORT, debug=True)
+# Vercel-এর জন্য app অবজেক্টটি ব্যবহার করা হয়, app.run() ডাইরেক্ট কল করা যাবে না
