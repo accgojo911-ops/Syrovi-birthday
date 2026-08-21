@@ -480,9 +480,9 @@ button.clicked{
 <h1>Happy Birthday</h1>
 
 <!-- গোল প্রোফাইল ইমেজ -->
-<img src="https://raw.githubusercontent.com/accgojo911-ops/Syrovi-birthday/main/static/profile.png" alt="Surovii" class="profile-img">
+<img src="https://raw.githubusercontent.com/accgojo911-ops/Syrovi-birthday/main/static/profile.png" alt="SUROVii" class="profile-img">
 
-<div class="name"><span>Surovii</span> 🎂</div>
+<div class="name"><span>SUROVii</span> 🥳✨</div>
 <div class="line"></div>
 <div class="heart">❤️</div>
 <p class="message">
