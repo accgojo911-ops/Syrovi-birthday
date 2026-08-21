@@ -613,7 +613,7 @@ window.addEventListener("load", function(){
     setTimeout(function(){
         const heart = document.querySelector(".heart");
         createConfetti(30, heart);
-    }, 700);
+    }, 1100);
 });
 </script>
 </body>
